@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +31,12 @@ public class TransactionServiceImpl implements TransactionService {
         transactionRepository.save(transaction);
 
         return transaction.getId();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Double getLast24HoursTotal() {
+        final var startDate = new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000));
+        return transactionRepository.findTotalAmountForLast24Hours(startDate);
     }
 }
