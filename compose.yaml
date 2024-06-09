@@ -1,1 +1,27 @@
 services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: wallet_db
+      MYSQL_USER: balance
+      MYSQL_PASSWORD: b@lance
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  balance-tracker-service:
+    image: balance-tracker-service:latest
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/wallet_db
+      SPRING_DATASOURCE_USERNAME: balance
+      SPRING_DATASOURCE_PASSWORD: b@lance
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
