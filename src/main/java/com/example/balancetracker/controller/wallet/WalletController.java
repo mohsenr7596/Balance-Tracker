@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/wallet")
 @RequiredArgsConstructor
 public class WalletController {
-    private UserService userService;
-    private TransactionService transactionService;
+    private final UserService userService;
+    private final TransactionService transactionService;
 
     @GetMapping("/balance")
     public ResponseEntity<UserBalanceResponseDto> getBalance(

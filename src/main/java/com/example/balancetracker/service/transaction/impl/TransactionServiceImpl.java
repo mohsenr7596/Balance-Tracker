@@ -21,8 +21,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public long addMoney(long userId, int amount) {
         final var user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        user.setBalance(user.getBalance() + amount);
-        userRepository.save(user);
+
+        userRepository.updateBalanceById(userId, amount); // thread safe
 
         final var transaction = new Transaction();
         transaction.setUser(user);
