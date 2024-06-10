@@ -17,7 +17,7 @@ public class WalletController {
 
     @GetMapping("/balance")
     public ResponseEntity<UserBalanceResponseDto> getBalance(
-            @RequestParam long userId
+            @RequestParam(name = "user_id") long userId
     ) {
         final var balance = userService.getBalance(userId);
         final var response = new UserBalanceResponseDto(balance);
@@ -26,7 +26,7 @@ public class WalletController {
 
     @PostMapping("/add-money")
     public ResponseEntity<TransactionResponseDto> addMoney(
-            @RequestParam Long userId,
+            @RequestParam(name = "user_id") long userId,
             @RequestParam int amount
     ) {
         final var referenceId = transactionService.addMoney(userId, amount);
